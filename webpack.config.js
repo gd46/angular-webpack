@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const { ContextReplacementPlugin } = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -9,32 +10,40 @@ module.exports = {
   target: 'node',
   context: __dirname + '/src',
   entry: {
-    index: './index.js',
-    another: './another-module.js',
-    vendor: [
-      'lodash'
-    ]
+    main: './main.ts'
+    // vendor: ['lodash']
   },
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'build')
   },
+  resolve: {
+    extensions: ['.js', '.ts', '.html']
+  },
+  devServer: {
+    contentBase: path.join(__dirname, "../build/"),
+    port: 9000
+  },
+  devtool: 'inline-source-map',
   externals: [nodeExternals()],
   module: {
     loaders: [
-      {
-        test: /\.html$/,
-        loader: 'html-loader'
-      }],
+      { test: /.ts$/, use: ['awesome-typescript-loader', 'angular2-template-loader'] },
+      { test: /.html$/, use: 'raw-loader' }
+    ]
   },
   plugins: [
     new CleanWebpackPlugin(['build']),
     new HtmlWebpackPlugin({
       template: './index.html' // Dynamically includes bundles to index.html
     }),
-    new BundleAnalyzerPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor'
-    })
+    // new BundleAnalyzerPlugin(), Output bundle size info
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'vendor'
+    // }),
+    new ContextReplacementPlugin(
+      /angular(\\|\/)core(\\|\/)@angular/,
+      path.resolve(__dirname, '../src')
+    )
   ]
 };

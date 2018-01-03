@@ -17,12 +17,11 @@ module.exports = {
   },
   output: {
     filename: '[name].bundle.js',
-    // chunkFilename: '[name].bundle.js',
     path: path.resolve(__dirname, 'build')
   },
   externals: [nodeExternals()],
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(['build']),
     new HtmlWebpackPlugin({
       title: 'Output Management'
     }),
@@ -30,16 +29,5 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor'
     })
-  ],
-  // plugins: [
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: 'common' // Specify the common bundle's name.
-    // })
-  // ]
-  // plugins: [
-  //  new webpack.optimize.CommonsChunkPlugin(
-  //    /* chunkName= */"vendor", 
-  //    /* filename= */"vendor.bundle.js"
-  //   )
-  // ]
+  ]
 };

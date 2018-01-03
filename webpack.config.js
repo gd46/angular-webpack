@@ -20,10 +20,17 @@ module.exports = {
     path: path.resolve(__dirname, 'build')
   },
   externals: [nodeExternals()],
+  module: {
+    loaders: [
+      {
+        test: /\.html$/,
+        loader: 'html-loader'
+      }],
+  },
   plugins: [
     new CleanWebpackPlugin(['build']),
     new HtmlWebpackPlugin({
-      title: 'Output Management'
+      template: './index.html' // Dynamically includes bundles to index.html
     }),
     new BundleAnalyzerPlugin(),
     new webpack.optimize.CommonsChunkPlugin({

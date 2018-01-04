@@ -4,7 +4,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const nodeExternals = require('webpack-node-externals');
+// const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   // target: 'node', // For backend app
@@ -38,6 +38,10 @@ module.exports = {
       {
         test: /.html$/,
         use: 'raw-loader'
+      },
+      {
+        test: /\.scss$/,
+        use: ['raw-loader', 'sass-loader']
       }
     ]
   },

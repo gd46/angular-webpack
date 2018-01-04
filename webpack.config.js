@@ -1,17 +1,19 @@
-// const webpack = require('webpack');
+const webpack = require('webpack');
 const { ContextReplacementPlugin } = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 // const nodeExternals = require('webpack-node-externals');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const OfflinePlugin = require('offline-plugin');
 
 module.exports = {
   // target: 'node', // For backend app
   context: __dirname + '/src',
   entry: {
-    main: './main.ts'
-    // vendor: ['lodash']
+    main: './main.ts',
+    vendor: ['offline-plugin/runtime']
   },
   output: {
     filename: '[name].bundle.js',
@@ -58,6 +60,14 @@ module.exports = {
     new ContextReplacementPlugin(
       /angular(\\|\/)core(\\|\/)@angular/,
       path.resolve(__dirname, '../src')
-    )
+    ),
+    // new webpack.optimize.ModuleConcatenationPlugin(), // Recommended for prod to shrink bundle size  
+    // new UglifyJsPlugin(),  // Recommended for prod to shrink bundle size  
+     
+    // it's always better if OfflinePlugin is the last plugin added
+    new OfflinePlugin({
+      AppCache: false,
+      ServiceWorker: { events: true },
+    }),
   ]
 };

@@ -26,7 +26,7 @@ module.exports = {
     contentBase: path.join(__dirname, '../build/'),
     port: 9000
   },
-  devtool: 'source-map',
+  devtool: 'inline-source-map', // source-map for PROD
   // externals: [nodeExternals()], // For backend app
   module: {
     loaders: [

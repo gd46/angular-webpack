@@ -2,11 +2,15 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const {TsConfigPathsPlugin} = require('awesome-typescript-loader');
 
 module.exports = {
   context: __dirname + '/src',
   resolve: {
-    extensions: ['.js', '.ts']
+    extensions: ['.js', '.ts', '.html'],
+    plugins: [
+      new TsConfigPathsPlugin({ configFileName: '../../tsconfig.json'})
+    ]
   },
   devtool: 'inline-source-map',
   module: {
@@ -24,16 +28,22 @@ module.exports = {
     //   }
     // ],
     loaders: [
-          {
-            test: /\.ts$/,
-            exclude: /node_modules/,
-            loader: 'tslint-loader',
-            options: {
-              emitErrors: true
-            }
-        },
-        { loader: 'raw', test: /\.(css|html)$/ },
-        { exclude: /node_modules/, loader: 'ts', test: /\.ts$/ }
+      {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        use: [
+          'awesome-typescript-loader',
+          'angular2-template-loader'
+        ]
+      },
+      {
+        test: /.html$/,
+        use: 'raw-loader'
+      },
+      {
+        test: /\.scss$/,
+        use: ['raw-loader', 'sass-loader']
+      }
     ]
   }
-}  
+};

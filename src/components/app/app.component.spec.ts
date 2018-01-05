@@ -26,7 +26,7 @@ describe('Component: Login', () => {
   });
 
   it('should test specs is working', () => {
-    expect(true).toEqual(false);
+    expect(true).toEqual(true);
   });
 
 });

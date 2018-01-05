@@ -20,13 +20,20 @@ describe('Component: Login', () => {
     // get test component from the fixture
     component = fixture.componentInstance;
 
-    // submitEl = fixture.debugElement.query(By.css('button'));
-    // loginEl = fixture.debugElement.query(By.css('input[type=email]'));
-    // passwordEl = fixture.debugElement.query(By.css('input[type=password]'));
   });
 
-  it('should test specs is working', () => {
-    expect(true).toEqual(true);
+  it('should create an instance of app component', () => {
+    expect(component).toBeDefined();
+  });
+
+  it('should have an h1 title', () => {
+     const h1El = fixture.debugElement.query(By.css('h1'));
+     expect(h1El.nativeElement.innerText).toEqual('Welcome to Momentz4Ever');
+  });
+
+  it('should have an h3 subtitle', () => {
+     const h3El = fixture.debugElement.query(By.css('h3'));
+     expect(h3El.nativeElement.innerHTML).toEqual('Hello from app component');
   });
 
 });

@@ -7,6 +7,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 // const nodeExternals = require('webpack-node-externals');
 // const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const OfflinePlugin = require('offline-plugin');
+const {TsConfigPathsPlugin} = require('awesome-typescript-loader');
 
 module.exports = {
   // target: 'node', // For backend app
@@ -20,7 +21,10 @@ module.exports = {
     path: path.resolve(__dirname, 'build')
   },
   resolve: {
-    extensions: ['.js', '.ts', '.html']
+    extensions: ['.js', '.ts', '.html'],
+    plugins: [
+      new TsConfigPathsPlugin()
+    ]
   },
   devServer: {
     contentBase: path.join(__dirname, '../build/'),

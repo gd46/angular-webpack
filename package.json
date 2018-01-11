@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "karma start ./config/karma/karma.conf.js",
-    "build": "webpack -p",
-    "server": "webpack-dev-server --open"
+    "build": "node node_modules/webpack/bin/webpack.js --config config/webpack/webpack.config.js --progress --display-error-details -p",
+    "webpack-dev-server": "node --max_old_space_size=8192 node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "server": "npm run webpack-dev-server -- --config config/webpack/webpack.config.js --open"
   },
   "author": "Giuseppe DiBella",
   "license": "ISC",

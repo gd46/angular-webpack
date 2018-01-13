@@ -3,35 +3,37 @@ const { ContextReplacementPlugin } = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-// const nodeExternals = require('webpack-node-externals');
-// const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-// const OfflinePlugin = require('offline-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const {TsConfigPathsPlugin} = require('awesome-typescript-loader');
+const argv = require('yargs');
+
+let conditionalPlugins = [];
+
+if(argv.checkBundle) {
+  conditionalPlugins.push(new BundleAnalyzerPlugin());
+}
 
 module.exports = {
-  // target: 'node', // For backend app
-  context: path.resolve(__dirname, '../../src'),
+  context: path.resolve(__dirname, '../src'),
   entry: {
     main: './main.ts',
-    // vendor: ['offline-plugin/runtime']
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, '../../build')
+    path: path.resolve(__dirname, '../build')
   },
   resolve: {
     extensions: ['.js', '.ts', '.html'],
     plugins: [
-      new TsConfigPathsPlugin({ configFileName: '../../tsconfig.json'})
+      new TsConfigPathsPlugin({ configFileName: '../tsconfig.json'})
     ]
   },
   devServer: {
-    contentBase: path.join(__dirname, '../../build/'),
+    contentBase: path.join(__dirname, '../build/'),
     port: 9000
   },
-  devtool: 'inline-source-map', // source-map for PROD
-  // externals: [nodeExternals()], // For backend app
+  devtool: 'source-map',
   module: {
     loaders: [
       {
@@ -52,12 +54,14 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(['../build']),
+    ...conditionalPlugins,
+    new CleanWebpackPlugin(['build'], {
+      root: path.resolve(__dirname, '../')
+    }),
     new HtmlWebpackPlugin({
       template: './index.html', // Dynamically includes bundles to index.html
       title: 'Webpack App'
     }),
-    // new BundleAnalyzerPlugin(), //Output bundle size info
     // new webpack.optimize.CommonsChunkPlugin({
     //   name: 'vendor'
     // }),
@@ -65,13 +69,7 @@ module.exports = {
       /angular(\\|\/)core(\\|\/)@angular/,
       path.resolve(__dirname, '../src')
     ),
-    // new webpack.optimize.ModuleConcatenationPlugin(), // Recommended for prod to shrink bundle size  
-    // new UglifyJsPlugin(),  // Recommended for prod to shrink bundle size  
-     
-    // it's always better if OfflinePlugin is the last plugin added
-    // new OfflinePlugin({
-    //   AppCache: false,
-    //   ServiceWorker: { events: true },
-    // }),
+    new webpack.optimize.ModuleConcatenationPlugin(), // Recommended for prod to shrink bundle size
+    // new UglifyJsPlugin(),  // Recommended for prod to shrink bundle size  TODO check options
   ]
 };

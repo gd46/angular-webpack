@@ -8,7 +8,7 @@ module.exports = (config) => {
     basePath: '.',
     browsers: ['ChromeHeadless'],
     files: [
-      // '../node_modules/es6-shim/es6-shim.min.js',
+      '../node_modules/es6-shim/es6-shim.min.js',
       'karma-entry.js'
     ],
     frameworks: ['jasmine'],

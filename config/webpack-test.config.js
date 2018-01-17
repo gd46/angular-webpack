@@ -1,32 +1,18 @@
 'use strict';
 
 const path = require('path');
-const webpack = require('webpack');
 const {TsConfigPathsPlugin} = require('awesome-typescript-loader');
 
 module.exports = {
-  context: __dirname + '/src',
+  context: path.resolve(__dirname, '../src'),
   resolve: {
     extensions: ['.js', '.ts', '.html'],
     plugins: [
-      new TsConfigPathsPlugin({ configFileName: '../../tsconfig.json'})
+      new TsConfigPathsPlugin({ configFileName: '../tsconfig.json'})
     ]
   },
   devtool: 'inline-source-map',
   module: {
-    // preLoaders: [
-    //     { exclude: /node_modules/, loader: 'tslint', test: /\.ts$/ }
-    // ],
-    // preLoaders: [
-    //   {
-    //       test: /\.ts$/,
-    //       exclude: /node_modules/,
-    //       loader: 'tslint-loader',
-    //       options: {
-    //         emitErrors: true
-    //       }
-    //   }
-    // ],
     loaders: [
       {
         test: /\.ts$/,

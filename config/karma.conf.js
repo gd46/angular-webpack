@@ -8,7 +8,7 @@ module.exports = (config) => {
     basePath: '.',
     browsers: ['ChromeHeadless'],
     files: [
-      // '../node_modules/es6-shim/es6-shim.min.js',
+      '../node_modules/es6-shim/es6-shim.min.js',
       'karma-entry.js'
     ],
     frameworks: ['jasmine'],
@@ -21,7 +21,7 @@ module.exports = (config) => {
     },
     reporters: ['dots'],
     singleRun: false,
-    webpack: require('../webpack/webpack-test.config'),
+    webpack: require('./webpack-test.config'),
     webpackServer: {
         noInfo: true
     }

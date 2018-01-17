@@ -7,8 +7,8 @@
     "test": "karma start ./config/karma.conf.js",
     "build:dev": "webpack --config config/webpack-dev.config.js --progress --display-error-details -p",
     "build:prod": "webpack --config config/webpack-prod.config.js --progress --display-error-details -p",
-    "analyze:dev": "BUNDLEANALYZER=1 npm run build:dev",
-    "analyze:prod": "BUNDLEANALYZER=1 npm run build:prod",
+    "analyze:dev": "npm run build:dev -- --env.BUNDLEANALYZER=1",
+    "analyze:prod": "npm run build:prod -- --env.BUNDLEANALYZER=1",
     "server": "webpack-dev-server --config config/webpack-dev.config.js --open"
   },
   "author": "Giuseppe DiBella",

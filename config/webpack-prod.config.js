@@ -6,11 +6,10 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const {TsConfigPathsPlugin} = require('awesome-typescript-loader');
-const argv = require('yargs');
 
 let conditionalPlugins = [];
 
-if(argv.checkBundle) {
+if(process.env.BUNDLEANALYZER) {
   conditionalPlugins.push(new BundleAnalyzerPlugin());
 }
 

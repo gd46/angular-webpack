@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "karma start ./config/karma/karma.conf.js",
+    "test": "karma start ./config/karma.conf.js",
     "build:dev": "webpack --config config/webpack-dev.config.js --progress --display-error-details -p",
     "build:prod": "webpack --config config/webpack-prod.config.js --progress --display-error-details -p",
+    "analyze:dev": "BUNDLEANALYZER=1 npm run build:dev",
+    "analyze:prod": "BUNDLEANALYZER=1 npm run build:prod",
     "server": "webpack-dev-server --config config/webpack-dev.config.js --open"
   },
   "author": "Giuseppe DiBella",
@@ -15,7 +17,6 @@
     "@angular/common": "^5.1.2",
     "@angular/compiler": "^5.1.2",
     "@angular/core": "^5.1.2",
-    "@angular/forms": "^5.1.2",
     "@angular/http": "^5.1.2",
     "@angular/platform-browser": "^5.1.2",
     "@angular/platform-browser-dynamic": "^5.1.2",
@@ -51,7 +52,6 @@
     "typings": "^2.1.1",
     "webpack": "^3.10.0",
     "webpack-bundle-analyzer": "^2.9.1",
-    "webpack-dev-server": "^2.9.7",
-    "yargs": "^10.1.1"
+    "webpack-dev-server": "^2.9.7"
   }
 }

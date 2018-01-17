@@ -4,11 +4,11 @@ const path = require('path');
 const {TsConfigPathsPlugin} = require('awesome-typescript-loader');
 
 module.exports = {
-  context: path.resolve(__dirname, '../../src'),
+  context: path.resolve(__dirname, '../src'),
   resolve: {
     extensions: ['.js', '.ts', '.html'],
     plugins: [
-      new TsConfigPathsPlugin({ configFileName: '../../tsconfig.json'})
+      new TsConfigPathsPlugin({ configFileName: '../tsconfig.json'})
     ]
   },
   devtool: 'inline-source-map',

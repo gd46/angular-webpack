@@ -21,7 +21,7 @@ module.exports = (config) => {
     },
     reporters: ['dots'],
     singleRun: false,
-    webpack: require('../webpack/webpack-test.config'),
+    webpack: require('./webpack-test.config'),
     webpackServer: {
         noInfo: true
     }

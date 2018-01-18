@@ -10,7 +10,7 @@ let conditionalPlugins = [];
 
 module.exports = (env) => {
 
-  if(env.BUNDLEANALYZER) {
+  if(env && env.BUNDLEANALYZER) {
     conditionalPlugins.push(new BundleAnalyzerPlugin());
   }
   
@@ -18,6 +18,12 @@ module.exports = (env) => {
 
     context: path.resolve(__dirname, '../src'),
     entry: {
+      angular: [
+        '@angular/http',
+        '@angular/common',
+        '@angular/compiler',
+        '@angular/core',
+        '@angular/router'],
       main: './main.ts',
     },
     output: {
@@ -38,14 +44,14 @@ module.exports = (env) => {
     module: {
       loaders: [
         {
-          test: /.ts$/,
+          test: /\.ts$/,
           use: [
             'awesome-typescript-loader',
             'angular2-template-loader'
           ]
         },
         {
-          test: /.html$/,
+          test: /\.html$/,
           use: 'raw-loader'
         },
         {
@@ -63,9 +69,9 @@ module.exports = (env) => {
         template: './index.html', // Dynamically includes bundles to index.html
         title: 'Webpack App'
       }),
-      // new webpack.optimize.CommonsChunkPlugin({
-      //   name: 'vendor'
-      // }),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'angular'
+      }),
       new ContextReplacementPlugin(
         /angular(\\|\/)core(\\|\/)@angular/,
         path.resolve(__dirname, '../src')

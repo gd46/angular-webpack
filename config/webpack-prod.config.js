@@ -6,18 +6,25 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const {TsConfigPathsPlugin} = require('awesome-typescript-loader');
+const CompressionPlugin = require("compression-webpack-plugin");
 
 let conditionalPlugins = [];
 
 module.exports = (env) => {
 
-  if(env.BUNDLEANALYZER) {
+  if(env && env.BUNDLEANALYZER) {
     conditionalPlugins.push(new BundleAnalyzerPlugin());
   }
 
   return {
     context: path.resolve(__dirname, '../src'),
     entry: {
+      angular: [
+        '@angular/http',
+        '@angular/common',
+        '@angular/compiler',
+        '@angular/core',
+        '@angular/router'],
       main: './main.ts',
     },
     output: {
@@ -38,14 +45,14 @@ module.exports = (env) => {
     module: {
       loaders: [
         {
-          test: /.ts$/,
+          test: /\.ts$/,
           use: [
             'awesome-typescript-loader',
             'angular2-template-loader'
           ]
         },
         {
-          test: /.html$/,
+          test: /\.html$/,
           use: 'raw-loader'
         },
         {
@@ -63,15 +70,26 @@ module.exports = (env) => {
         template: './index.html', // Dynamically includes bundles to index.html
         title: 'Webpack App'
       }),
-      // new webpack.optimize.CommonsChunkPlugin({
-      //   name: 'vendor'
-      // }),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'angular'
+      }),
       new ContextReplacementPlugin(
         /angular(\\|\/)core(\\|\/)@angular/,
         path.resolve(__dirname, '../src')
       ),
-      new webpack.optimize.ModuleConcatenationPlugin(), // Recommended for prod to shrink bundle size
-      // new UglifyJsPlugin(),  // Recommended for prod to shrink bundle size  TODO check options
+      new webpack.optimize.ModuleConcatenationPlugin(),
+      new UglifyJsPlugin({
+        test: /\.ts/,
+        include: /\/src/,
+        sourceMap: true,
+        extractComments: true,
+        parallel: true,
+        uglifyOptions: {
+          ie8: false,
+          ecma: 6,
+        }
+      }),
+      new CompressionPlugin(),
     ]
   };
-}
+};

@@ -19,12 +19,18 @@ module.exports = (env) => {
   return {
     context: path.resolve(__dirname, '../src'),
     entry: {
-      angular: [
-        '@angular/http',
-        '@angular/common',
-        '@angular/compiler',
-        '@angular/core',
-        '@angular/router'],
+      // angular: [
+      //   '@angular/http',
+      //   '@angular/common',
+      //   '@angular/compiler',
+      //   '@angular/core',
+      //   '@angular/router'],
+      // vendor: [
+      //   'zone.js',
+      //   'rxjs'
+      // ],
+      vendor: './vendor.ts',
+      polyfills: './polyfills.ts',
       main: './main.ts',
     },
     output: {
@@ -71,16 +77,25 @@ module.exports = (env) => {
         title: 'Webpack App'
       }),
       new webpack.optimize.CommonsChunkPlugin({
-        name: 'angular'
+        // names: ['angular', 'vendor']
+        name: ['main', 'vendor', 'polyfills']
       }),
       new ContextReplacementPlugin(
-        /angular(\\|\/)core(\\|\/)@angular/,
+        /angular(\\|\/)core(\\|\/)@angular/, // Workaround for https://github.com/angular/angular/issues/14898
         path.resolve(__dirname, '../src')
+      ),
+      new webpack.ContextReplacementPlugin( // Workaround for https://github.com/angular/angular/issues/20357
+        /\@angular(\\|\/)core(\\|\/)esm5/, 
+        path.join(__dirname, '../src')
       ),
       new webpack.optimize.ModuleConcatenationPlugin(),
       new UglifyJsPlugin({
         test: /\.ts/,
         include: /\/src/,
+        mangle: true,
+        compress: {
+          drop_console: true
+        },
         sourceMap: true,
         extractComments: true,
         parallel: true,

@@ -1,5 +1,4 @@
 const path = require('path');
-const {TsConfigPathsPlugin} = require('awesome-typescript-loader');
 
 module.exports = {
     devtool: 'inline-source-map',

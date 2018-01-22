@@ -1,12 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {ContextReplacementPlugin} = require('webpack');
-
-let conditionalPlugins = [];
+const {TsConfigPathsPlugin} = require('awesome-typescript-loader');
 
 module.exports = {
   context: path.resolve(__dirname, '../src'),
@@ -53,7 +51,7 @@ module.exports = {
       root: path.resolve(__dirname, '../')
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: ['main', 'vendor', 'polyfills']
+      names: ['main', 'vendor', 'polyfills']
     }),
     new HtmlWebpackPlugin({
       template: './index.html', // Dynamically includes bundles to index.html
@@ -69,4 +67,4 @@ module.exports = {
     ),
     // new ExtractTextWebpackPlugin('[name].css')
   ]
-}
+};

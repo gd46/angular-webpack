@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "karma start ./config/karma.conf.js",
-    "build:dev": "webpack --config config/webpack-dev.config.js --progress --display-error-details -p",
-    "build:prod": "webpack --config config/webpack-prod.config.js --progress --display-error-details -p",
+    "build:dev": "webpack --env.env=dev --progress --display-error-details -p",
+    "build:prod": "webpack --env.env=prod --progress --display-error-details -p",
     "analyze:dev": "npm run build:dev -- --env.BUNDLEANALYZER=1",
     "analyze:prod": "npm run build:prod -- --env.BUNDLEANALYZER=1",
-    "server": "webpack-dev-server --config config/webpack-dev.config.js --open"
+    "server": "webpack-dev-server --env.env=dev --open",
+    "server:watch": "npm run server -- --watch",
+    "start": "npm run server:watch"
   },
   "author": "Giuseppe DiBella",
   "license": "ISC",
@@ -48,11 +50,13 @@
     "phantomjs-prebuilt": "^2.1.16",
     "raw-loader": "^0.5.1",
     "sass-loader": "^6.0.6",
+    "style-loader": "^0.19.1",
     "tslint": "^5.8.0",
     "typescript": "^2.6.2",
     "typings": "^2.1.1",
     "webpack": "^3.10.0",
     "webpack-bundle-analyzer": "^2.9.1",
-    "webpack-dev-server": "^2.9.7"
+    "webpack-dev-server": "^2.9.7",
+    "webpack-merge": "^4.1.1"
   }
 }

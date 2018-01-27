@@ -32,6 +32,7 @@
   "devDependencies": {
     "@types/jasmine": "^2.8.3",
     "@types/node": "^8.5.2",
+    "angular-router-loader": "^0.8.2",
     "angular2-template-loader": "^0.6.2",
     "awesome-typescript-loader": "^3.4.1",
     "clean-webpack-plugin": "^0.1.17",

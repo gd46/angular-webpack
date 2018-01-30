@@ -6,4 +6,15 @@ module.exports = {
       contentBase: path.join(__dirname, '../build/'),
       port: 9000
     },
+    module: {
+      loaders: [
+        {
+          test: /\.ts$/,
+          use: [
+            'awesome-typescript-loader',
+            'angular2-template-loader',
+          ]
+        },
+      ]
+    }
   };

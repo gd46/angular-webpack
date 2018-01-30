@@ -1,5 +1,5 @@
 const commonConfig = require('./config/webpack.common');
-const webpackMerge = require('webpack-merge');
+const merge = require('webpack-merge');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = (env) => {
@@ -14,9 +14,11 @@ module.exports = (env) => {
     plugins: [
       ...conditionalPlugins
     ]
-  }
+  };
 
   const envConfig = require(`./config/webpack.${env.env}.js`);
 
-  return webpackMerge(conditionalConfig, commonConfig, envConfig);
-}
+  return merge.strategy({
+    'module.loaders': 'prepend',
+  })(conditionalConfig, commonConfig, envConfig);
+};

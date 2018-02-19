@@ -9,9 +9,12 @@
     "build:prod": "webpack --env.env=prod --progress --display-error-details -p",
     "analyze:dev": "npm run build:dev -- --env.BUNDLEANALYZER=1",
     "analyze:prod": "npm run build:prod -- --env.BUNDLEANALYZER=1",
-    "server": "webpack-dev-server --env.env=dev --open",
-    "server:watch": "npm run server -- --watch",
-    "start": "npm run server:watch"
+    "server:dev": "webpack-dev-server --env.env=dev --open",
+    "server:dev:watch": "npm run server:dev -- --watch",
+    "server:prod": "webpack-dev-server --env.env=prod --open",
+    "server:prod:watch": "npm run server:prod -- --watch",
+    "start:prod": "npm run server:prod:watch",
+    "start": "npm run server:dev:watch"
   },
   "author": "Giuseppe DiBella",
   "license": "ISC",

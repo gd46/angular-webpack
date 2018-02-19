@@ -7,12 +7,12 @@ import { PreloadSelectedModulesList } from './preloading-strategy';
 const appRoutes: Routes = [
   {
     path: 'dashboard', 
-    loadChildren: '../dashboard/dashboard.module#DashboardModule?chunkName=DashboardModule',
+    loadChildren: '../dashboard/dashboard.module#DashboardModule',
     data: {preload: true}
   },
   {
     path: 'about',
-    loadChildren: '../about/about.module#AboutModule?chunkName=AboutModule'
+    loadChildren: '../about/about.module#AboutModule'
   }
 ];
 

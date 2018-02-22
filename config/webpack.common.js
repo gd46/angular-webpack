@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const {ContextReplacementPlugin} = require('webpack');
 const {TsConfigPathsPlugin} = require('awesome-typescript-loader');
 
 module.exports = {
@@ -56,15 +55,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './index.html', // Dynamically includes bundles to index.html
       title: 'Webpack App'
-    }),
-    new ContextReplacementPlugin(
-      /angular(\\|\/)core(\\|\/)@angular/, // Workaround for https://github.com/angular/angular/issues/14898
-      path.resolve(__dirname, '../src')
-    ),
-    new webpack.ContextReplacementPlugin( // Workaround for https://github.com/angular/angular/issues/20357
-      /\@angular(\\|\/)core(\\|\/)esm5/, 
-      path.join(__dirname, '../src')
-    ),
+    })
     // new ExtractTextWebpackPlugin('[name].css')
   ]
 };
